@@ -216,7 +216,7 @@ class Stream(object):
                     error_counter = 0
                     self.listener.on_connect()
                     self._read_loop(resp)
-            except Exception, exception:
+            except Exception as exception:
                 # any other exception is fatal, so kill loop
                 break
 

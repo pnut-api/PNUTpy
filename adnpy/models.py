@@ -17,7 +17,7 @@ def is_iterable(obj):
 
 
 def is_seq_not_string(obj):
-    if isinstance(obj, basestring):
+    if isinstance(obj, str):
         return False
 
     return is_iterable(obj)
@@ -33,7 +33,7 @@ class SimpleValueDictListMode(object):
     @classmethod
     def from_response_data(cls, data, api):
         resp = dict()
-        for key, val in data.iteritems():
+        for key, val in data.items():
             resp[key] = [int(x) for x in val]
 
         return resp
@@ -69,7 +69,7 @@ class APIModel(dict):
         if not data:
             return
 
-        for k, v in data.iteritems():
+        for k, v in data.items():
             if isinstance(v, collections.Mapping):
                 self[k] = APIModel(v, api)
             elif v and is_seq_not_string(v) and isinstance(v[0], collections.Mapping):
@@ -108,7 +108,7 @@ class APIModel(dict):
         """
 
         data = {}
-        for k, v in self.iteritems():
+        for k, v in self.items():
             if k.startswith('_'):
                 continue
 
@@ -290,8 +290,8 @@ class Interaction(APIModel):
 
         api_model = User if interaction.action == 'follow' else Post
 
-        interaction.objects = map(lambda x: api_model.from_response_data(x, api), interaction.objects)
-        interaction.users = map(lambda x: User.from_response_data(x, api), interaction.users)
+        interaction.objects = [api_model.from_response_data(x, api) for x in interaction.objects]
+        interaction.users = [User.from_response_data(x, api) for x in interaction.users]
 
         interaction.event_date = parse(interaction.event_date)
         return interaction

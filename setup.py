@@ -3,18 +3,18 @@
 from setuptools import setup, find_packages
 
 setup(name="adnpy",
-      version='0.3.8',
+      version='0.3.9',
       description="App.net API library for python",
       long_description=open('README.rst').read(),
       license="MIT",
       author="Alex Kessinger, Bryan Berg, Mark Thurman, App.net",
       author_email="alex@app.net",
-      url="http://github.com/appdotnet/adnpy",
+      url="http://github.com/33mhz/adnpy",
       packages=find_packages(exclude=['tests']),
       data_files=[('examples', ['examples/send-broadcast.py'])],
       install_requires=[
-          'python-dateutil>=1.5',
-          'requests>=2.0.1',
+          'python-dateutil>=2.2',
+          'requests>=2.4.3',
       ],
       keywords="app.net api library",
       zip_safe=True)

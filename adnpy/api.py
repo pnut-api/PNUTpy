@@ -111,7 +111,7 @@ def bind_api_method(func_name, path, payload_type=None, payload_list=False, allo
 
     def run(self, *args, **kwargs):
         parameters = {}
-        for key, val in kwargs.items():
+        for key, val in list(kwargs.items()):
             if key in allowed_params:
                 value = kwargs.pop(key)
                 if value is True:
@@ -131,7 +131,7 @@ def bind_api_method(func_name, path, payload_type=None, payload_list=False, allo
             except IndexError:
                 raise Exception('Not enough positional arguments expects: %s' % (path_args))
 
-            value = unicode(getattr(value, 'id', value))
+            value = str(getattr(value, 'id', value))
             proccessed_path = proccessed_path.replace(variable, value)
 
         resp_method = self.request

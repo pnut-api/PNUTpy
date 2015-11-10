@@ -25,7 +25,7 @@ class MyStreamListener(StreamListener):
         if meta.is_deleted:
             return
 
-        print post.text
+        print(post.text)
 
 my_api = adnpy.API.build_api(access_token=app_access_token)
 stream = Stream(my_api, stream_def, MyStreamListener)
