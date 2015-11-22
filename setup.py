@@ -9,7 +9,7 @@ setup(name="adnpy",
       license="MIT",
       author="Alex Kessinger, Bryan Berg, Mark Thurman, App.net",
       author_email="alex@app.net",
-      url="http://github.com/33mhz/adnpy",
+      url="https://github.com/appdotnet/ADNpy",
       packages=find_packages(exclude=['tests']),
       data_files=[('examples', ['examples/send-broadcast.py'])],
       install_requires=[

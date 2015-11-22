@@ -90,7 +90,7 @@ class APIModel(dict):
        :param api: an instance of :class:`adnpy.api.API`
        :rtype: model obj
         """
-        return cls(json.loads(raw_json), api)
+        return cls(json.loads(raw_json.decode('utf-8')), api)
 
     @classmethod
     def from_response_data(cls, data, api=None):
