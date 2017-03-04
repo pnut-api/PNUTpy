@@ -1,9 +1,8 @@
 *.pyc
 *.swp
 build/
-docs/_build/
 dist/
-adnpy.egg-info/
+pnutpy.egg-info/
 .env/
 .coverage
 htmlcov/

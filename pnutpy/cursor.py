@@ -1,7 +1,7 @@
 import logging
 import time
 
-from adnpy.errors import AdnRateLimitAPIException
+from pnutpy.errors import PnutRateLimitAPIException
 
 logger = logging.getLogger(__name__)
 
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 def get_data(func, args, kwargs, sleep=None):
     try:
         data, meta = func(*args, **kwargs)
-    except AdnRateLimitAPIException:
+    except PnutRateLimitAPIException:
         if sleep:
             sleep = sleep * 2
         else:

@@ -1,7 +1,7 @@
 import json
 import requests
 
-from adnpy.models import APIModel
+from pnutpy.models import APIModel
 
 
 def json_handler(obj):
@@ -20,7 +20,7 @@ def json_encoder(data):
     return json.dumps(data, default=json_handler)
 
 
-def get_app_access_token(client_id, client_secret, host='account.app.net', verify_ssl=True):
+def get_app_access_token(client_id, client_secret, host='pnut.io', verify_ssl=True):
     data = {
         'client_id': client_id,
         'client_secret': client_secret,

@@ -1,6 +1,6 @@
 """
 .. module:: models
-   :synopsis: Simple abstractions of App.net entities.
+   :synopsis: Simple abstractions of pnut.io entities.
 
 """
 import collections
@@ -33,7 +33,7 @@ class SimpleValueDictListMode(object):
     @classmethod
     def from_response_data(cls, data, api):
         resp = dict()
-        for key, val in data.items():
+        for key, val in list(data.items()):
             resp[key] = [int(x) for x in val]
 
         return resp
@@ -69,7 +69,7 @@ class APIModel(dict):
         if not data:
             return
 
-        for k, v in data.items():
+        for k, v in list(data.items()):
             if isinstance(v, collections.Mapping):
                 self[k] = APIModel(v, api)
             elif v and is_seq_not_string(v) and isinstance(v[0], collections.Mapping):
@@ -87,7 +87,7 @@ class APIModel(dict):
     def from_string(cls, raw_json, api=None):
         """
        :param raw_json: a json response from the API
-       :param api: an instance of :class:`adnpy.api.API`
+       :param api: an instance of :class:`pnutpy.api.API`
        :rtype: model obj
         """
         return cls(json.loads(raw_json.decode('utf-8')), api)
@@ -96,7 +96,7 @@ class APIModel(dict):
     def from_response_data(cls, data, api=None):
         """
        :param data: a dict
-       :param api: an instance of :class:`adnpy.api.API`
+       :param api: an instance of :class:`pnutpy.api.API`
        :rtype: model obj
         """
         model = cls(data, api)
@@ -104,11 +104,11 @@ class APIModel(dict):
 
     def serialize(self):
         """
-        Converts :class:`adnpy.models.Model` into a normal dict without references to the api
+        Converts :class:`pnutpy.models.Model` into a normal dict without references to the api
         """
 
         data = {}
-        for k, v in self.items():
+        for k, v in list(self.items()):
             if k.startswith('_'):
                 continue
 
@@ -164,8 +164,8 @@ class User(APIModel):
         """
         # First create a copy of the current user
         user_dict = self.serialize()
-        # Then delete the entities in the description field
-        del user_dict['description']['entities']
+        # Then delete the entities in the content field
+        del user_dict['content']['entities']
         # Then upload user_dict
         user, meta = self._api.update_user('me', data=user_dict)
 
@@ -219,7 +219,7 @@ class Post(APIModel):
         else:
             post.user = None
 
-        post.starred_by = [User.from_response_data(u, api) for u in post.get('starred_by', [])]
+        post.starred_by = [User.from_response_data(u, api) for u in post.get('bookmarked_by', [])]
         post.reposters = [User.from_response_data(u, api) for u in post.get('reposters', [])]
 
         post.created_at = parse(post.created_at)
@@ -249,36 +249,17 @@ class Post(APIModel):
         """
         return self._api.unrepost_post(self)
 
-    def star(self):
+    def bookmark(self):
         """
-        Star this post
+        Bookmark this post
         """
-        return self._api.star_post(self)
+        return self._api.bookmark_post(self)
 
-    def unstar(self):
+    def unbookmark(self):
         """
-        Remove star of this post
+        Remove bookmark of this post
         """
-        return self._api.unstar_post(self)
-
-
-class Message(APIModel):
-    """
-    The Message Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        message = super(Message, cls).from_response_data(data, api)
-        message.id = int(message.id)
-        if 'user' in message:
-            message.user = User.from_response_data(message.user, api)
-        else:
-            message.user = None
-
-        message.created_at = parse(message.created_at)
-
-        return message
-
+        return self._api.unbookmark_post(self)
 
 class Interaction(APIModel):
     """
@@ -297,45 +278,6 @@ class Interaction(APIModel):
         return interaction
 
 
-class Channel(APIModel):
-    """
-    The Channel Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        channel = super(Channel, cls).from_response_data(data, api)
-        channel.owner = User.from_response_data(channel.owner, api)
-        return channel
-
-
-class App(APIModel):
-    """
-    The App Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        app = super(App, cls).from_response_data(data, api)
-        app.owner = User.from_response_data(app.owner, api)
-        app.added_on = parse(app.added_on)
-        if app.get('recommended_by'):
-            app.recommended_by = [User.from_response_data(x, api) for x in app.recommended_by]
-
-        return app
-
-
-class File(APIModel):
-    """
-    The File Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        file_ = super(File, cls).from_response_data(data, api)
-        if file_.get('user'):
-            file_.user = User.from_response_data(file_.user, api)
-
-        return file_
-
-
 class Token(APIModel):
     """
     The Token Model
@@ -347,66 +289,4 @@ class Token(APIModel):
             token.user = User.from_response_data(token.user, api)
 
         return token
-
-
-class Place(APIModel):
-    """
-    The Place Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        place = super(Place, cls).from_response_data(data, api)
-
-        return place
-
-    @property
-    def id(self):
-        return self.factual_id
-
-
-class ExploreStream(APIModel):
-    """
-    The Explore Stream Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        explore_stream = super(ExploreStream, cls).from_response_data(data, api)
-
-        return explore_stream
-
-    @property
-    def id(self):
-        return self.slug
-
-
-class AppStream(APIModel):
-    """
-    The App Stream Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        app_stream = super(AppStream, cls).from_response_data(data, api)
-
-        return app_stream
-
-
-class StreamFilter(APIModel):
-    """
-    The Stream Filter Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        stream_filter = super(StreamFilter, cls).from_response_data(data, api)
-
-        return stream_filter
-
-
-class StreamingMeta(APIModel):
-    """
-    The Streaming Meta Model
-    """
-    @classmethod
-    def from_response_data(cls, data, api=None):
-        streaming_meta = super(StreamingMeta, cls).from_response_data(data, api)
-        streaming_meta.is_deleted = streaming_meta.get('is_deleted', False)
-        return streaming_meta
+        
