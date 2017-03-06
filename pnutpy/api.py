@@ -203,7 +203,7 @@ bind_api_method('unrepost_post', '/posts/{post_id}/repost', payload_type=Post, m
                 allowed_params=POST_PARAMS, require_auth=True)
 
 
-bind_api_method('bookmark_post', '/posts/{post_id}/bookmark', payload_type=Post, method='Put',
+bind_api_method('bookmark_post', '/posts/{post_id}/bookmark', payload_type=Post, method='PUT',
                 allowed_params=POST_PARAMS, require_auth=True)
 
 
@@ -305,14 +305,6 @@ bind_api_method('users_followers', '/users/{user_id}/followers', payload_type=Us
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
 
-bind_api_method('users_following_ids', '/users/{user_id}/following/ids', payload_type=SimpleValueModel, payload_list=True,
-                allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
-
-
-bind_api_method('users_followers_ids', '/users/{user_id}/followers/ids', payload_type=SimpleValueModel, payload_list=True,
-                allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
-
-
 bind_api_method('users_muted_users', '/users/{user_id}/muted', payload_type=User, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
@@ -322,18 +314,6 @@ bind_api_method('users_muted_users_ids', '/users/{user_id}/muted', payload_type=
 
 
 bind_api_method('users_blocked_users', '/users/{user_id}/blocked', payload_type=User, payload_list=True,
-                allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
-
-
-bind_api_method('users_blocked_user_ids', '/users/blocked/ids', payload_type=SimpleValueModel, payload_list=True,
-                allowed_params=USER_PARAMS + ['ids'], require_auth=True)
-
-
-bind_api_method('users_reposted_post', '/posts/{post_id}/reposters', payload_type=User, payload_list=True,
-                allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
-
-
-bind_api_method('users_bookmarked_post', '/posts/{post_id}/bookmarks', payload_type=User, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
 
@@ -351,4 +331,7 @@ bind_api_method('get_token', '/token', payload_type=Token, require_auth=True)
 
 
 # Config
-bind_api_method('get_config', '/system/configuration', payload_type=APIModel, require_auth=True)
+bind_api_method('get_config', '/sys/config', payload_type=APIModel, require_auth=True)
+
+# Stats
+bind_api_method('get_stats', '/sys/stats', payload_type=APIModel, require_auth=True)

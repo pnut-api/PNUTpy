@@ -7,7 +7,7 @@ PNUTpy aims to be an easy-to-use Python library for interacting with the `pnut.i
 Installation
 ------------
 
-To install Requests, simply:
+To install Requests, simply (hey wait! not set up):
 
 .. code-block:: bash
 

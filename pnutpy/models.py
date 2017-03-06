@@ -220,7 +220,7 @@ class Post(APIModel):
             post.user = None
 
         post.starred_by = [User.from_response_data(u, api) for u in post.get('bookmarked_by', [])]
-        post.reposters = [User.from_response_data(u, api) for u in post.get('reposters', [])]
+        post.reposters = [User.from_response_data(u, api) for u in post.get('reposted_by', [])]
 
         post.created_at = parse(post.created_at)
 

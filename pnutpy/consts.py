@@ -8,20 +8,19 @@ PAGINATION_PARAMS = [
 POST_PARAMS = [
     'include_muted',
     'include_deleted',
-    # 'include_directed_posts',
-    # 'include_machine',
+    'include_directed_posts',
     'include_bookmarked_by',
-    'include_reposters',
-    # 'include_annotations',
-    # 'include_post_annotations',
-    # 'include_user_annotations',
+    'include_reposted_by',
+    'include_raw',
+    'include_post_raw',
+    'include_user_raw',
     'include_html',
 ]
 
 
 USER_PARAMS = [
-    # 'include_annotations',
-    # 'include_user_annotations',
+    'include_raw',
+    'include_user_raw',
     'include_html',
 ]
 
@@ -67,22 +66,21 @@ USER_PARAMS = [
 
 CHANNEL_PARAMS = [
     'channel_types',
-    # 'include_marker',
+    'include_marker',
     'include_read',
     'include_recent_message',
-    # 'include_annotations',
-    # 'include_user_annotations',
-    # 'include_message_annotations',
+    'include_raw',
+    'include_user_raw',
+    'include_message_raw',
 ]
 
 
 MESSAGE_PARAMS = [
     'include_muted',
     'include_deleted',
-    # 'include_machine',
-    # 'include_annotations',
-    # 'include_message_annotations',
-    # 'include_user_annotations',
+    'include_raw',
+    'include_message_raw',
+    'include_user_raw',
     'include_html',
 ]
 
@@ -91,9 +89,9 @@ MESSAGE_PARAMS = [
     # 'file_types',
     # 'include_incomplete',
     # 'include_private',
-    # 'include_annotations',
+    # 'include_raw',
     # 'include_file_annotations',
-    # 'include_user_annotations',
+    # 'include_user_raw',
 # ]
 
 
