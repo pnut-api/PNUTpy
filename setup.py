@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='pnutpy',
-      version='0.1.0',
+      version='0.2.0',
       description='pnut.io API library for python',
       long_description=open('README.rst').read(),
       license='MIT',

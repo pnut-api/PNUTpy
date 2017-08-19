@@ -7,7 +7,6 @@ import collections
 from dateutil.parser import parse
 import json
 
-
 def is_iterable(obj):
     try:
         iter(obj)
@@ -15,19 +14,16 @@ def is_iterable(obj):
     except:
         return False
 
-
 def is_seq_not_string(obj):
     if isinstance(obj, str):
         return False
 
     return is_iterable(obj)
 
-
 class SimpleValueModel(object):
     @classmethod
     def from_response_data(cls, data, api):
         return data
-
 
 class SimpleValueDictListMode(object):
     @classmethod
@@ -37,7 +33,6 @@ class SimpleValueDictListMode(object):
             resp[key] = [int(x) for x in val]
 
         return resp
-
 
 class APIModel(dict):
     """
@@ -140,11 +135,9 @@ class APIModel(dict):
     def __getstate__(self):
         return self.serialize()
 
-
 class APIMeta(APIModel):
     """API response metadata."""
     pass
-
 
 class User(APIModel):
     """
@@ -205,7 +198,6 @@ class User(APIModel):
         """
         return self._api.unblock_user(self)
 
-
 class Post(APIModel):
     """
     The Post Model
@@ -261,6 +253,22 @@ class Post(APIModel):
         """
         return self._api.unbookmark_post(self)
 
+class Message(APIModel):
+    """
+    The Message Model
+    """
+    @classmethod
+    def from_response_data(cls, data, api=None):
+        message = super(Message, cls).from_response_data(data, api)
+        message.id = int(message.id)
+        if 'user' in message:
+            message.user = User.from_response_data(message.user, api)
+        else:
+            message.user = None
+
+        message.created_at = parse(message.created_at)
+        return message
+
 class Interaction(APIModel):
     """
     The Interaction Model
@@ -277,6 +285,26 @@ class Interaction(APIModel):
         interaction.event_date = parse(interaction.event_date)
         return interaction
 
+class Channel(APIModel):
+    """
+    The Channel Model
+    """
+    @classmethod
+    def from_response_data(cls, data, api=None):
+        channel = super(Channel, cls).from_response_data(data, api)
+        channel.owner = User.from_response_data(channel.owner, api)
+        return channel
+
+class File(APIModel):
+    """
+    The File Model
+    """
+    @classmethod
+    def from_response_data(cls, data, api=None):
+        file_ = super(File, cls).from_response_data(data, api)
+        if file_.get('user'):
+            file_.user = User.from_response_data(file_.user, api)
+        return file_
 
 class Token(APIModel):
     """

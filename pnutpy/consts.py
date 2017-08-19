@@ -85,14 +85,14 @@ MESSAGE_PARAMS = [
 ]
 
 
-# FILE_PARAMS = [
-    # 'file_types',
-    # 'include_incomplete',
-    # 'include_private',
-    # 'include_raw',
-    # 'include_file_annotations',
-    # 'include_user_raw',
-# ]
+FILE_PARAMS = [
+    'file_types',
+    'include_incomplete',
+    'include_private',
+    'include_raw',
+    'include_file_raw',
+    'include_user_raw',
+]
 
 
 # PLACE_SEARCH_PARAMS = [

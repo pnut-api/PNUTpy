@@ -1,10 +1,10 @@
 import re
 import requests
 
-from pnutpy.consts import (PAGINATION_PARAMS, POST_PARAMS, USER_PARAMS)
+from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, USER_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
-from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Interaction, Token, APIMeta)
+from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, File, Interaction, Token, APIMeta)
 from pnutpy.utils import json_encoder
 
 
