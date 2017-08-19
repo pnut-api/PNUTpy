@@ -317,6 +317,118 @@ bind_api_method('users_blocked_users', '/users/{user_id}/blocked', payload_type=
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
 
+# Channels
+bind_api_method('subscribed_channels', '/users/me/channels/subscribed', payload_type=Channel, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('create_channel', '/channels', payload_type=Channel, method='POST',
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('get_channel', '/channels/{channel_id}', payload_type=Channel,
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('get_channels', '/channels', payload_type=Channel, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS + ['ids'], require_auth=True)
+
+
+bind_api_method('users_channels', '/users/me/channels', payload_type=Channel, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('num_unread_pm_channels', '/users/me/channels/num_unread/pm', payload_type=SimpleValueModel,
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('update_channel', '/channels/{channel_id}', payload_type=Channel, method='PUT',
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('subscribe_channel', '/channels/{channel_id}/subscribe', payload_type=Channel, method='PUT',
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('unsubscribe_channel', '/channels/{channel_id}/subscribe', payload_type=Channel, method='DELETE',
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('subscribed_users', '/channels/{channel_id}/subscribers', payload_type=User, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('mute_channel', '/channels/{channel_id}/mute', payload_type=Channel, method='PUT',
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('unmute_channel', '/channels/{channel_id}/mute', payload_type=Channel, method='DELETE',
+                allowed_params=CHANNEL_PARAMS, require_auth=True)
+
+
+bind_api_method('muted_channels', '/users/me/channels/muted', payload_type=Channel, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
+
+
+# Messages
+bind_api_method('get_channel_messages', '/channels/{channel_id}/messages', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('create_message', '/channels/{channel_id}/messages', payload_type=Message, method='POST',
+                allowed_params=MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('get_message', '/channels/{channel_id}/messages/{message_id}', payload_type=Message,
+                allowed_params=MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('get_messages', '/channels/messages', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + ['ids'], require_auth=True)
+
+
+bind_api_method('users_messages', '/users/me/messages', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('delete_message', '/channels/{channel_id}/messages/{message_id}', payload_type=Message, method='DELETE',
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + ['ids'], require_auth=True)
+
+
+# Files
+
+bind_api_method('create_file', '/files', payload_type=File, method='POST',
+                allowed_params=FILE_PARAMS, require_auth=True, content_type='multipart/form-data',)
+
+
+bind_api_method('update_file', '/files/{file_id}', payload_type=File, method='PUT',
+                allowed_params=FILE_PARAMS, require_auth=True)
+
+
+bind_api_method('set_file_content', '/files/{file_id}/content', payload_type=File, method='PUT',
+                allowed_params=FILE_PARAMS, require_auth=True, content_type='multipart/form-data',)
+
+
+bind_api_method('get_file_content', '/files/{file_id}/content', payload_type=File, method='GET',
+                allowed_params=FILE_PARAMS, raw_response=True, require_auth=True)
+
+
+bind_api_method('get_file', '/files/{file_id}', payload_type=File, method='GET',
+                allowed_params=FILE_PARAMS, require_auth=True)
+
+
+bind_api_method('get_files', '/files', payload_type=File, method='GET', payload_list=True,
+                allowed_params=FILE_PARAMS + ['ids'], require_auth=True)
+
+
+bind_api_method('delete_file', '/files/{file_id}', payload_type=File, method='DELETE',
+                allowed_params=FILE_PARAMS, require_auth=True)
+
+
+bind_api_method('get_my_files', '/users/me/files', payload_type=File, method='GET', payload_list=True,
+allowed_params=FILE_PARAMS + PAGINATION_PARAMS, require_auth=True)
+
+
 # Interactions
 bind_api_method('interactions_with_user', '/users/me/actions', payload_type=Interaction, payload_list=True,
                 allowed_params=PAGINATION_PARAMS, require_auth=True)
