@@ -1,9 +1,80 @@
 Note: all examples assume module `pnutpy` has been imported!
 Generally `meta` will contain the response metadata
+Some API calls are [paginated](https://pnut.io/docs/api/implementation/pagination)
+
 # Authentication
     pnutpy.api.add_authorization_token(<Auth_Token>)
 
 # Posting
+
+`post` will contain the post object(s). Post IDs can be strings or integers.
+
+All post methods accept additional parameters. See pnutpy.consts or [the official docs](https://pnut.io/docs/api/resources/posts#general-post-parameters). For sample usage see [Retrieving posts](#retrieving-posts)
+
+## Creating posts
+
+For possible `post_data` entries see the [pnut.io docs](https://pnut.io/docs/api/resources/posts/lifecycle#post-posts)
+
+    post_data = {'text':'Hello pnut.io from pnutpy!'}
+    post, meta = pnutpy.api.create_post(data=post_data)
+
+## Reposting and unreposting
+
+    post_id = 12345
+    #Repost it
+    response, meta = pnutpy.api.repost_post(post_id)
+    #Unrepost it
+    response, meta = pnutpy.api.unrepost_post(post_id)
+
+## Bookmarking and unbookmarking
+
+    post_id = 12345
+    #Bookmark it
+    response, meta = pnutpy.api.bookmark_post(post_id)
+    #Unbookmark it
+    response, meta = pnutpy.api.unbookmark_post(post_id)
+
+## Retrieving posts
+
+    #A single post
+    post_id = 12345
+    post, meta = pnutpy.api.get_post(post_id, include_raw=True)
+    
+    #Multiple posts
+    post_ids = [12345, 67890] #Alternative: post_ids = '12345,67890'
+    post, meta = pnutpy.api.get_posts(post_id)
+    
+    user_id = 1
+
+    #Posts by a given user
+    post, meta = pnutpy.api.users_posts(user_id)
+
+    #Posts bookmarked by a given user
+    post, meta = pnutpy.api.users_bookmarked_posts(user_id)
+
+    #Posts mentioning a given user
+    post, meta = pnutpy.api.users_mentioned_posts(user_id)
+
+    #Posts with a given hashtag
+    hashtag = 'MondayNightDanceParty' #Don't include the '#'
+    post, meta = pnutpy.api.posts_with_hashtag(hashtag)
+
+    #Posts in the thread for the post with the ID post_id
+    post, meta = pnutpy.api.posts_thread(post_id)
+    
+    #Posts in the authorized user's timeline, that is: Posts by themselves ad the users they follow
+    post, meta = pnutpy.api.users_post_streams_me()
+
+    #Unified stream: Timeline + posts mentioning them
+    post, meta = pnutpy.api.users_post_streams_unified()
+
+    #Global stream: All public posts (with a few exceptions regarding bots etc)
+    post, meta = pnutpy.api.users_post_streams_global()
+
+## Deleting posts
+
+    post_id = 12345
+    post, meta = pnutpy.api.delete_post(post_id, include_raw=True)
 
 # Users
 
@@ -46,24 +117,15 @@ Update an existing file. Only *name*, *is_public*, and *raw* can be updated
     file_id = 1234567890
     pnut_file, meta = pnutpy.api.update_file(file_id, data=file_data)
 
-## Getting a file
+## Getting files
 
-Retrieves a file.
-
+    #One file
     file_id = 1234567890
     pnut_file, meta = pnutpy.api.get_file(file_id)
-
-## Getting multiple files
-
-Retrieves multiple files
-
+    #Multiple files
     file_ids = [12345, 67890] #Alternative: file_ids = '12345,67890'
     pnut_file, meta = pnutpy.api.get_files(ids=file_ids)
-
-## Get my files
-
-Retrieves all files of the authorized user
-
+    #Retrieves all files of the authorized user
     pnut_file, meta = pnutpy.api.get_my_files()
 
 
