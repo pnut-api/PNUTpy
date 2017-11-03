@@ -13,3 +13,9 @@ Release History
 ++++++++++++++++++
 
 * add most channel and message endpoints
+
+
+0.2.1 (2017-11-03)
+++++++++++++++++++
+
+* update missing parameter constants
