@@ -72,6 +72,7 @@ CHANNEL_PARAMS = [
     'include_raw',
     'include_user_raw',
     'include_message_raw',
+    'include_channel_raw',
 ]
 
 
