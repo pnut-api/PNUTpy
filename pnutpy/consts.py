@@ -6,22 +6,33 @@ PAGINATION_PARAMS = [
 
 
 POST_PARAMS = [
-    'include_muted',
     'include_deleted',
-    'include_directed_posts',
+    'include_client',
+    'include_counts',
+    'include_html',
+    'include_post_html',
     'include_bookmarked_by',
     'include_reposted_by',
+    'include_directed_posts',
+    'include_copy_mentions',
+    'include_muted',
     'include_raw',
     'include_post_raw',
+    'include_user',
+    'include_user_html',
+    'include_presence',
     'include_user_raw',
-    'include_html',
 ]
 
 
 USER_PARAMS = [
+    'include_html',
+    'include_user_html',
+    'include_counts',
+    'include_user',
+    'include_presence',
     'include_raw',
     'include_user_raw',
-    'include_html',
 ]
 
 
@@ -65,24 +76,38 @@ USER_PARAMS = [
 
 
 CHANNEL_PARAMS = [
-    'channel_types',
-    'include_marker',
     'include_read',
-    'include_recent_message',
+    'channel_types',
+    'exclude_channel_types',
+    'include_marker',
+    'include_inactive',
     'include_raw',
-    'include_user_raw',
-    'include_message_raw',
     'include_channel_raw',
+    'include_recent_message',
+    'include_limited_users',
+    'include_message_raw',
+    'include_html',
+    'include_user_html',
+    'include_counts',
+    'include_user',
+    'include_presence',
+    'include_user_raw',
+    
 ]
 
 
 MESSAGE_PARAMS = [
-    'include_muted',
     'include_deleted',
+    'include_html',
+    'include_message_html',
     'include_raw',
     'include_message_raw',
+    'include_client',
+    'include_user_html',
+    'include_counts',
+    'include_user',
+    'include_presence',
     'include_user_raw',
-    'include_html',
 ]
 
 
@@ -92,6 +117,11 @@ FILE_PARAMS = [
     'include_private',
     'include_raw',
     'include_file_raw',
+    'include_html',
+    'include_user_html',
+    'include_counts',
+    'include_user',
+    'include_presence',
     'include_user_raw',
 ]
 
