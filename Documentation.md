@@ -125,9 +125,25 @@ Not yet documented. Available functions:
     response, meta = pnutpy.api.users_blocked_users('@hutattedonmyarm')
 
 
-# Channels
+# Channels and PMs
+
+`channel_id` is always the ID of the channel as string like '1' or integer.
 
 ## Retrieving channels 
+
+This uses `subscribed_channels` as an example, but other channel-retrieving functions work similarly. Here's an overview:
+
+* `get_channel(1) #Gets channel with ID 1`
+* `get_channels(ids=[1,2,3]) #Gets channels with IDs 1, 2, and 3`
+* `users_channels() #Gets channels created by the authorized user`
+* `muted_channels() #Gets channels muted by the authorized user`
+
+
+This includes *all* types of channels: PMs, chat channels, and channels with user created types. However, you can request only certain types like this:
+
+    response, meta = pnutpy.api.subscribed_channels(channel_types='io.pnut.core.pm,com.example.site')
+
+
     #Retrieve all channels the authorized user is subscribed to
     response, meta = pnutpy.api.subscribed_channels(include_raw=True)
     
@@ -148,6 +164,73 @@ Not yet documented. Available functions:
                     print('Name: ' + channel_name)
     print("")
     
+
+## Creating channels
+
+This is merely an example ACL, for full ACL (access control list) options see [the docs](https://pnut.io/docs/api/how-to/channels-acl). Note that `immutable:False` is default behaviour, but included anyways for demo purposes
+
+    #ACL
+    #Array of user_ids with full access (read, write, manage)
+    full_users = ['@username']
+    #ACL for full user access
+    full = {'immutable':False, 'you':True, 'user_ids':full_users}
+    #Array of user_ids with write access (read, write)
+    write_users = ['@another_username']
+    #ACL for full write access
+    write = {'immutable':False, 'you':True, 'any_user':False, 'user_ids':write_users}
+    #ACL for full read access
+    read = {'immutable':False, 'public': True, 'any_user':True}
+    #Final ACL dictionary
+    acl = {'full':full, 'write':write, 'read':read}
+
+    #'io.pnut.core.chat' (aka regular chat channels) need the channel name as additional info
+    raw_value = {'name':'New users'}
+    raw = [{'type':'io.pnut.core.chat-settings', 'value':raw_value}]
+
+    #Everything pieced together
+    channel_info = {'type':'io.pnut.core.chat' , 'acl':acl, 'raw': raw}
+
+    response, meta = pnutpy.api.create_channel(data=channel_info)
+
+## Editing/Updating channels
+
+This removes @username as full user, and adds @username1 and @username2. Read and Write ACLs will not be modified.
+
+    full_users = ['@username1', '@username2']
+    full = {'immutable':False, 'you':True, 'user_ids':full_users}
+    acl = {'full':full}
+
+    channel_info = {'acl':acl}
+    response, meta = pnutpy.api.update_channel(channel_id,data=channel_info)
+
+## (Un-)Subscribing and (un-)muting
+
+* `subscribe_channel(channel_id)` subscribes to a channel
+* `unsubscribe_channel(channel_id)` unsubscribes from a channel
+* `subscribed_users` gets all users subscribed to a channel
+* `mute_channel(channel_id)` mutes a channel
+* `unmute_channel(channel_id)` unmutes a channel
+* `muted_channels()` gets all muted channels
+
+## Private messages (PMs)
+
+PMs are a bit different, yet similar. They are basically channels with a type of `io.pnut.core.pm`. Their creation is handled by pnut.io, they're immutable, and the owner is irrelevant.
+
+The number of unread PM channels can be retrieved by calling `pnutpy.api.num_unread_pm_channels()`.
+
+Sending PMs can be done in one of two ways: Either by creating a message in the appropriate channel, or by creating a special message in a channel with the ID 'pm' like this:
+
+    #Note: You can send the same message to multiple recipients. 'destinations' is an array!
+    message_info = {'text':'This is a message', 'destinations':[user_id]}
+    response, meta = pnutpy.api.create_message('pm', data=message_info)
+
+Channel info for existing PM channels can be retrieved via `response, meta = pnutpy.api.existing_pm(ids='1')`, but note that this is a recent addition to the library by me, so ids must be a comma-separated string of user ids.
+
+Retrieving PMs is identical to retrieving messages in a regular channel.
+
+## Messages
+
+**TODO**
 
 # Files
 
