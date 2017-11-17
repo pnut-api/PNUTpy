@@ -321,6 +321,8 @@ bind_api_method('users_blocked_users', '/users/{user_id}/blocked', payload_type=
 bind_api_method('subscribed_channels', '/users/me/channels/subscribed', payload_type=Channel, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
 
+bind_api_method('existing_pm', '/users/me/channels/existing_pm', payload_type=Channel, payload_list=False,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS + ['ids'], require_auth=True)
 
 bind_api_method('create_channel', '/channels', payload_type=Channel, method='POST',
                 allowed_params=CHANNEL_PARAMS, require_auth=True)
