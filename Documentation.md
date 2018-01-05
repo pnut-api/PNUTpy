@@ -90,12 +90,17 @@ Note: `user_id` is either a string '@username' or their integer id
 
 ## Edit profile
 
-Not yet documented. Available functions:
+    #Replace user profile, anything not included is removed
+    response, meta = pnutpy.api.update_user('me', data=userobj)
 
-    pnutpy.api.update_user()
-    pnutpy.api.patch_user()
-    pnutpy.api.update_avatar()
-    pnutpy.api.update_cover()
+    #Update only the specified parts of the user profile (name, text, timezone, and locale only)
+    response, meta = pnutpy.api.patch_user('me', data=userobj)
+
+    #Update avatar image
+    response, meta = pnutpy.api.update_avatar('me', files={'avatar': ('filename.png', open('filename.png', 'rb',), 'image/png')})
+
+    #Update cover image
+    response, meta = pnutpy.api.update_cover('me', files={'cover': ('filename.png', open('filename.png', 'rb',), 'image/png')})
 
 ## Following, muting, blocking
 
