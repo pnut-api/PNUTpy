@@ -90,13 +90,11 @@ Note: `user_id` is either a string '@username' or their integer id
 
 ## Edit profile
 
-Not yet documented. Available functions:
-
     #Replace user profile, anything not included is removed
-    pnutpy.api.update_user()
+    response, meta = pnutpy.api.update_user('me', data=userobj)
 
     #Update only the specified parts of the user profile (name, text, timezone, and locale only)
-    pnutpy.api.patch_user()
+    response, meta = pnutpy.api.patch_user('me', data=userobj)
 
     #Update avatar image
     response, meta = pnutpy.api.update_avatar('me', files={'avatar': ('filename.png', open('filename.png', 'rb',), 'image/png')})
