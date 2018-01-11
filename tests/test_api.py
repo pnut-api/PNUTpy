@@ -161,6 +161,8 @@ class PnutpyAPITests(PnutpyTestCase):
         channels, meta = self.api.muted_channels()
         channel, meta = self.api.unmute_channel(951)
 
+        channels, meta = self.api.channel_search(is_public=1,channel_types='io.pnut.core.chat',categories='tech')
+
     def test_message(self):
 
         message1, meta = self.api.create_message(178, data={'text': "awesome 1"})
@@ -172,6 +174,8 @@ class PnutpyAPITests(PnutpyTestCase):
 
         message, meta = self.api.delete_message(178, message1)
         message, meta = self.api.delete_message(178, message2)
+
+        messages, meta = self.api.message_search(channel_ids='600,18')
 
     # TODO: sort out this test case and account permissions needed
     # def test_file(self):

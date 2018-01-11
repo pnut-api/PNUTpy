@@ -87,6 +87,18 @@ CHANNEL_PARAMS = [
 ]
 
 
+CHANNEL_SEARCH_PARAMS = [
+    'order',
+    'categories',
+    'channel_types',
+    'raw_types',
+    'exclude_channel_types',
+    'is_private',
+    'is_public',
+    'owner_id'
+]
+
+
 MESSAGE_PARAMS = [
     'include_deleted',
     'include_html',
@@ -99,6 +111,27 @@ MESSAGE_PARAMS = [
     'include_user',
     'include_presence',
     'include_user_raw',
+]
+
+
+MESSAGE_SEARCH_PARAMS = [
+    'channel_ids',
+    'order',
+    'q',
+    'tags',
+    'mentions',
+    'leading_mentions',
+    'links',
+    'link_domains',
+    'is_nsfw',
+    'is_reply',
+    'is_sticky',
+    'client_id',
+    'creator_id',
+    'reply_to',
+    'thread_id',
+    'user_types',
+    'raw_types'
 ]
 
 

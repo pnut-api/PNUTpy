@@ -2,7 +2,7 @@ import re
 import requests
 
 from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, POST_SEARCH_PARAMS,
-    USER_PARAMS, USER_SEARCH_PARAMS)
+    USER_PARAMS, USER_SEARCH_PARAMS, CHANNEL_SEARCH_PARAMS, MESSAGE_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
 from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, ExploreStream, File, Interaction, Token, APIMeta)
@@ -378,6 +378,10 @@ bind_api_method('muted_channels', '/users/me/channels/muted', payload_type=Chann
                 allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
 
 
+bind_api_method('channel_search', '/channels/search', payload_type=Channel, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS + CHANNEL_SEARCH_PARAMS, require_auth=True)
+
+
 # Messages
 bind_api_method('get_channel_messages', '/channels/{channel_id}/messages', payload_type=Message, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS, require_auth=True)
@@ -401,6 +405,10 @@ bind_api_method('users_messages', '/users/me/messages', payload_type=Message, pa
 
 bind_api_method('delete_message', '/channels/{channel_id}/messages/{message_id}', payload_type=Message, method='DELETE',
                 allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + ['ids'], require_auth=True)
+
+
+bind_api_method('message_search', '/channels/messages/search', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + MESSAGE_SEARCH_PARAMS, require_auth=True)
 
 
 # Files
