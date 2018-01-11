@@ -36,10 +36,13 @@ USER_PARAMS = [
 ]
 
 
-# USER_SEARCH_PARAMS = [
-    # 'q',
-    # 'count',
-# ]
+USER_SEARCH_PARAMS = [
+    'q',
+    'order',
+    'locale',
+    'timezone',
+    'types'
+]
 
 
 # POST_SEARCH_PARAMS = [

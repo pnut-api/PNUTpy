@@ -1,7 +1,8 @@
 import re
 import requests
 
-from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, USER_PARAMS)
+from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, 
+    USER_PARAMS, USER_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
 from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, File, Interaction, Token, APIMeta)
@@ -316,6 +317,8 @@ bind_api_method('users_muted_users_ids', '/users/{user_id}/muted', payload_type=
 bind_api_method('users_blocked_users', '/users/{user_id}/blocked', payload_type=User, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
+bind_api_method('user_search', '/users/search', payload_type=User, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + USER_PARAMS + USER_SEARCH_PARAMS, require_auth=True)
 
 # Channels
 bind_api_method('subscribed_channels', '/users/me/channels/subscribed', payload_type=Channel, payload_list=True,

@@ -87,6 +87,8 @@ class PnutpyAPITests(PnutpyTestCase):
 
         users, meta = self.api.users_blocked_users('me')
 
+        users, meta = self.api.user_search(q='news',types='feed')
+
     def test_channel(self):
 
         channels, meta = self.api.subscribed_channels()
