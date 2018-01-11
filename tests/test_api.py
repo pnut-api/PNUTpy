@@ -47,6 +47,8 @@ class PnutpyAPITests(PnutpyTestCase):
         posts, meta = self.api.users_post_streams_unified()
         posts, meta = self.api.posts_streams_global()
 
+        posts, meta = self.api.post_search(tags='MondayNightDanceParty')
+
     def test_user(self):
         display_name = u'tester %s' % (time.time())
         user, meta = self.api.get_user('me')

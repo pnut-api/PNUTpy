@@ -1,7 +1,7 @@
 import re
 import requests
 
-from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, 
+from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, POST_SEARCH_PARAMS,
     USER_PARAMS, USER_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
@@ -246,6 +246,9 @@ bind_api_method('users_post_streams_unified', '/posts/streams/unified', payload_
 
 bind_api_method('posts_streams_global', '/posts/streams/global', payload_type=Post, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + POST_PARAMS, require_auth=False)
+
+bind_api_method('post_search', '/posts/search', payload_type=Post, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + POST_PARAMS + POST_SEARCH_PARAMS, require_auth=True)
 
 
 # User methods
