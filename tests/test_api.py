@@ -227,6 +227,10 @@ class PnutpyAPITests(PnutpyTestCase):
     def test_config(self):
         config, meta = self.api.get_config()
 
+    def test_explore_stream(self):
+        explore_streams, meta = self.api.get_explore_streams()
+        posts, meta = self.api.get_explore_stream(explore_streams[0])
+
     # TODO: implement app streams
     # def test_app_stream(self):
     #     app_access_token, token = get_app_access_token(self.client_id, self.client_secret)

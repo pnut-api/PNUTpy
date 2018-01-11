@@ -317,4 +317,17 @@ class Token(APIModel):
             token.user = User.from_response_data(token.user, api)
 
         return token
-        
+
+class ExploreStream(APIModel):
+    """
+    The Explore Stream Model
+    """
+    @classmethod
+    def from_response_data(cls, data, api=None):
+        explore_stream = super(ExploreStream, cls).from_response_data(data, api)
+
+        return explore_stream
+
+    @property
+    def id(self):
+        return self.slug

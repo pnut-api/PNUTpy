@@ -5,7 +5,7 @@ from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FI
     USER_PARAMS, USER_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
-from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, File, Interaction, Token, APIMeta)
+from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, ExploreStream, File, Interaction, Token, APIMeta)
 from pnutpy.utils import json_encoder
 
 
@@ -455,3 +455,11 @@ bind_api_method('get_config', '/sys/config', payload_type=APIModel, require_auth
 
 # Stats
 bind_api_method('get_stats', '/sys/stats', payload_type=APIModel, require_auth=True)
+
+
+# Explore Streams
+bind_api_method('get_explore_streams', '/posts/streams/explore', payload_type=ExploreStream, payload_list=True,
+                require_auth=False)
+
+bind_api_method('get_explore_stream', '/posts/streams/explore/{slug}', payload_type=Post, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + POST_PARAMS, require_auth=False)
