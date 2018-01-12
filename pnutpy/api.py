@@ -411,6 +411,18 @@ bind_api_method('message_search', '/channels/messages/search', payload_type=Mess
                 allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + MESSAGE_SEARCH_PARAMS, require_auth=True)
 
 
+bind_api_method('sticky_messages', '/channels/{channel_id}/sticky_messages', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('stick_message', '/channels/{channel_id}/messages/{message_id}/sticky', payload_type=Message, method='PUT',
+                allowed_params=MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('unstick_message', '/channels/{channel_id}/messages/{message_id}/sticky', payload_type=Message, method='DELETE',
+                allowed_params=MESSAGE_PARAMS, require_auth=True)
+
+
 # Files
 
 bind_api_method('create_file', '/files', payload_type=File, method='POST',

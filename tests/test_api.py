@@ -167,6 +167,7 @@ class PnutpyAPITests(PnutpyTestCase):
 
         message1, meta = self.api.create_message(178, data={'text': "awesome 1"})
         message2, meta = self.api.create_message(178, data={'text': "awesome 2"})
+        message3, meta = self.api.create_message(1001, data={'text': "awesome sticky test"})
         message, meta = self.api.get_message(178, message1)
         messages, meta = self.api.get_messages(ids='%s, %s' % (message1.id, message2.id))
         messages, meta = self.api.users_messages()
@@ -176,6 +177,11 @@ class PnutpyAPITests(PnutpyTestCase):
         message, meta = self.api.delete_message(178, message2)
 
         messages, meta = self.api.message_search(channel_ids='600,18')
+
+        messages, meta = self.api.sticky_messages(1001)
+        message, meta = self.api.stick_message(1001, message3)
+        message, meta = self.api.unstick_message(1001, message3)
+        message, meta = self.api.delete_message(1001, message3)
 
     # TODO: sort out this test case and account permissions needed
     # def test_file(self):
