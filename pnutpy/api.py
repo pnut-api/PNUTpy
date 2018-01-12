@@ -5,7 +5,7 @@ from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FI
     USER_PARAMS, USER_SEARCH_PARAMS, CHANNEL_SEARCH_PARAMS, MESSAGE_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
-from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, ExploreStream, File, Interaction, Token, APIMeta)
+from pnutpy.models import (SimpleValueModel, SimpleValueDictListMode, APIModel, Post, User, Channel, Message, ExploreStream, File, Interaction, Token, APIMeta)
 from pnutpy.utils import json_encoder
 
 
@@ -320,8 +320,22 @@ bind_api_method('users_muted_users_ids', '/users/{user_id}/muted', payload_type=
 bind_api_method('users_blocked_users', '/users/{user_id}/blocked', payload_type=User, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
+
 bind_api_method('user_search', '/users/search', payload_type=User, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS + USER_SEARCH_PARAMS, require_auth=True)
+
+
+bind_api_method('user_presence', '/presence', payload_type=SimpleValueModel, payload_list=True,
+                allowed_params=USER_PARAMS, require_auth=True)
+
+
+bind_api_method('get_users_presence', '/users/{user_id}/presence', payload_type=SimpleValueModel, payload_list=False,
+                allowed_params=USER_PARAMS, require_auth=True)
+
+
+bind_api_method('update_users_presence', '/users/{user_id}/presence', payload_type=SimpleValueModel, payload_list=False,
+                allowed_params=USER_PARAMS + ['presence'], require_auth=True, method='PUT')
+
 
 # Channels
 bind_api_method('subscribed_channels', '/users/me/channels/subscribed', payload_type=Channel, payload_list=True,
