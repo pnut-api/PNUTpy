@@ -36,43 +36,34 @@ USER_PARAMS = [
 ]
 
 
-# USER_SEARCH_PARAMS = [
-    # 'q',
-    # 'count',
-# ]
+USER_SEARCH_PARAMS = [
+    'q',
+    'order',
+    'locale',
+    'timezone',
+    'types'
+]
 
 
-# POST_SEARCH_PARAMS = [
-    # 'index',
-    # 'order',
-    # 'query',
-    # 'text',
-    # 'hashtags',
-    # 'links',
-    # 'link_domains',
-    # 'mentions',
-    # 'leading_mentions',
-    # 'annotation_types',
-    # 'attachment_types',
-    # 'crosspost_url',
-    # 'crosspost_domain',
-    # 'place_id',
-    # 'is_reply',
-    # 'is_directed',
-    # 'has_location',
-    # 'has_checkin',
-    # 'is_crosspost',
-    # 'has_attachment',
-    # 'has_oembed_photo',
-    # 'has_oembed_video',
-    # 'has_oembed_html5video',
-    # 'has_oembed_rich',
-    # 'language',
-    # 'client_id',
-    # 'creator_id',
-    # 'reply_to',
-    # 'thread_id',
-# ]
+POST_SEARCH_PARAMS = [
+    'order',
+    'q',
+    'tags',
+    'mentions',
+    'leading_mentions',
+    'links',
+    'link_domains',
+    'is_directed',
+    'is_revised',
+    'is_nsfw',
+    'is_reply',
+    'client_id',
+    'creator_id',
+    'reply_to',
+    'thread_id',
+    'user_types',
+    'raw_types'
+]
 
 
 CHANNEL_PARAMS = [
@@ -96,6 +87,18 @@ CHANNEL_PARAMS = [
 ]
 
 
+CHANNEL_SEARCH_PARAMS = [
+    'order',
+    'categories',
+    'channel_types',
+    'raw_types',
+    'exclude_channel_types',
+    'is_private',
+    'is_public',
+    'owner_id'
+]
+
+
 MESSAGE_PARAMS = [
     'include_deleted',
     'include_html',
@@ -108,6 +111,27 @@ MESSAGE_PARAMS = [
     'include_user',
     'include_presence',
     'include_user_raw',
+]
+
+
+MESSAGE_SEARCH_PARAMS = [
+    'channel_ids',
+    'order',
+    'q',
+    'tags',
+    'mentions',
+    'leading_mentions',
+    'links',
+    'link_domains',
+    'is_nsfw',
+    'is_reply',
+    'is_sticky',
+    'client_id',
+    'creator_id',
+    'reply_to',
+    'thread_id',
+    'user_types',
+    'raw_types'
 ]
 
 

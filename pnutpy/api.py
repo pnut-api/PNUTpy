@@ -1,10 +1,11 @@
 import re
 import requests
 
-from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, USER_PARAMS)
+from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, POST_SEARCH_PARAMS,
+    USER_PARAMS, USER_SEARCH_PARAMS, CHANNEL_SEARCH_PARAMS, MESSAGE_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
-from pnutpy.models import (SimpleValueModel, APIModel, Post, User, Channel, Message, File, Interaction, Token, APIMeta)
+from pnutpy.models import (SimpleValueModel, SimpleValueDictListMode, APIModel, Post, User, Channel, Message, ExploreStream, File, Interaction, Token, APIMeta)
 from pnutpy.utils import json_encoder
 
 
@@ -246,6 +247,9 @@ bind_api_method('users_post_streams_unified', '/posts/streams/unified', payload_
 bind_api_method('posts_streams_global', '/posts/streams/global', payload_type=Post, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + POST_PARAMS, require_auth=False)
 
+bind_api_method('post_search', '/posts/search', payload_type=Post, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + POST_PARAMS + POST_SEARCH_PARAMS, require_auth=True)
+
 
 # User methods
 
@@ -317,6 +321,22 @@ bind_api_method('users_blocked_users', '/users/{user_id}/blocked', payload_type=
                 allowed_params=PAGINATION_PARAMS + USER_PARAMS, require_auth=True)
 
 
+bind_api_method('user_search', '/users/search', payload_type=User, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + USER_PARAMS + USER_SEARCH_PARAMS, require_auth=True)
+
+
+bind_api_method('user_presence', '/presence', payload_type=SimpleValueModel, payload_list=True,
+                allowed_params=USER_PARAMS, require_auth=True)
+
+
+bind_api_method('get_users_presence', '/users/{user_id}/presence', payload_type=SimpleValueModel, payload_list=False,
+                allowed_params=USER_PARAMS, require_auth=True)
+
+
+bind_api_method('update_users_presence', '/users/{user_id}/presence', payload_type=SimpleValueModel, payload_list=False,
+                allowed_params=USER_PARAMS + ['presence'], require_auth=True, method='PUT')
+
+
 # Channels
 bind_api_method('subscribed_channels', '/users/me/channels/subscribed', payload_type=Channel, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
@@ -372,6 +392,10 @@ bind_api_method('muted_channels', '/users/me/channels/muted', payload_type=Chann
                 allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS, require_auth=True)
 
 
+bind_api_method('channel_search', '/channels/search', payload_type=Channel, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + CHANNEL_PARAMS + CHANNEL_SEARCH_PARAMS, require_auth=True)
+
+
 # Messages
 bind_api_method('get_channel_messages', '/channels/{channel_id}/messages', payload_type=Message, payload_list=True,
                 allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS, require_auth=True)
@@ -395,6 +419,22 @@ bind_api_method('users_messages', '/users/me/messages', payload_type=Message, pa
 
 bind_api_method('delete_message', '/channels/{channel_id}/messages/{message_id}', payload_type=Message, method='DELETE',
                 allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + ['ids'], require_auth=True)
+
+
+bind_api_method('message_search', '/channels/messages/search', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS + MESSAGE_SEARCH_PARAMS, require_auth=True)
+
+
+bind_api_method('sticky_messages', '/channels/{channel_id}/sticky_messages', payload_type=Message, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('stick_message', '/channels/{channel_id}/messages/{message_id}/sticky', payload_type=Message, method='PUT',
+                allowed_params=MESSAGE_PARAMS, require_auth=True)
+
+
+bind_api_method('unstick_message', '/channels/{channel_id}/messages/{message_id}/sticky', payload_type=Message, method='DELETE',
+                allowed_params=MESSAGE_PARAMS, require_auth=True)
 
 
 # Files
@@ -449,3 +489,11 @@ bind_api_method('get_config', '/sys/config', payload_type=APIModel, require_auth
 
 # Stats
 bind_api_method('get_stats', '/sys/stats', payload_type=APIModel, require_auth=True)
+
+
+# Explore Streams
+bind_api_method('get_explore_streams', '/posts/streams/explore', payload_type=ExploreStream, payload_list=True,
+                require_auth=False)
+
+bind_api_method('get_explore_stream', '/posts/streams/explore/{slug}', payload_type=Post, payload_list=True,
+                allowed_params=PAGINATION_PARAMS + POST_PARAMS, require_auth=False)

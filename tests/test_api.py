@@ -47,6 +47,8 @@ class PnutpyAPITests(PnutpyTestCase):
         posts, meta = self.api.users_post_streams_unified()
         posts, meta = self.api.posts_streams_global()
 
+        posts, meta = self.api.post_search(tags='MondayNightDanceParty')
+
     def test_user(self):
         display_name = u'tester %s' % (time.time())
         user, meta = self.api.get_user('me')
@@ -86,6 +88,8 @@ class PnutpyAPITests(PnutpyTestCase):
         users, meta = self.api.users_muted_users_ids('me')
 
         users, meta = self.api.users_blocked_users('me')
+
+        users, meta = self.api.user_search(q='news',types='feed')
 
     def test_channel(self):
 
@@ -157,10 +161,13 @@ class PnutpyAPITests(PnutpyTestCase):
         channels, meta = self.api.muted_channels()
         channel, meta = self.api.unmute_channel(951)
 
+        channels, meta = self.api.channel_search(is_public=1,channel_types='io.pnut.core.chat',categories='tech')
+
     def test_message(self):
 
         message1, meta = self.api.create_message(178, data={'text': "awesome 1"})
         message2, meta = self.api.create_message(178, data={'text': "awesome 2"})
+        message3, meta = self.api.create_message(1001, data={'text': "awesome sticky test"})
         message, meta = self.api.get_message(178, message1)
         messages, meta = self.api.get_messages(ids='%s, %s' % (message1.id, message2.id))
         messages, meta = self.api.users_messages()
@@ -168,6 +175,13 @@ class PnutpyAPITests(PnutpyTestCase):
 
         message, meta = self.api.delete_message(178, message1)
         message, meta = self.api.delete_message(178, message2)
+
+        messages, meta = self.api.message_search(channel_ids='600,18')
+
+        messages, meta = self.api.sticky_messages(1001)
+        message, meta = self.api.stick_message(1001, message3)
+        message, meta = self.api.unstick_message(1001, message3)
+        message, meta = self.api.delete_message(1001, message3)
 
     # TODO: sort out this test case and account permissions needed
     # def test_file(self):
@@ -222,6 +236,10 @@ class PnutpyAPITests(PnutpyTestCase):
 
     def test_config(self):
         config, meta = self.api.get_config()
+
+    def test_explore_stream(self):
+        explore_streams, meta = self.api.get_explore_streams()
+        posts, meta = self.api.get_explore_stream(explore_streams[0])
 
     # TODO: implement app streams
     # def test_app_stream(self):
