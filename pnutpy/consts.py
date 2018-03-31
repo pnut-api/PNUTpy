@@ -150,6 +150,22 @@ FILE_PARAMS = [
 ]
 
 
+POLL_PARAMS = [
+    'poll_types',
+    'exclude_poll_types',
+    'include_closed',
+    'include_private',
+    'include_raw',
+    'include_poll_raw',
+    'include_html',
+    'include_user_html',
+    'include_counts',
+    'include_user',
+    'include_presence',
+    'include_user_raw',
+]
+
+
 # PLACE_SEARCH_PARAMS = [
     # 'latitude',
     # 'longitude',

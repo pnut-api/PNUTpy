@@ -306,6 +306,17 @@ class File(APIModel):
             file_.user = User.from_response_data(file_.user, api)
         return file_
 
+class Poll(APIModel):
+    """
+    The Poll Model
+    """
+    @classmethod
+    def from_response_data(cls, data, api=None):
+        poll_ = super(Poll, cls).from_response_data(data, api)
+        if poll_.get('user'):
+            poll_.user = User.from_response_data(poll_.user, api)
+        return poll_
+
 class Token(APIModel):
     """
     The Token Model

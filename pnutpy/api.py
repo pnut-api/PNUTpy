@@ -1,11 +1,11 @@
 import re
 import requests
 
-from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POST_PARAMS, POST_SEARCH_PARAMS,
+from pnutpy.consts import (PAGINATION_PARAMS, CHANNEL_PARAMS, MESSAGE_PARAMS, FILE_PARAMS, POLL_PARAMS, POST_PARAMS, POST_SEARCH_PARAMS,
     USER_PARAMS, USER_SEARCH_PARAMS, CHANNEL_SEARCH_PARAMS, MESSAGE_SEARCH_PARAMS)
 from pnutpy.errors import (PnutAuthAPIException, PnutPermissionDenied, PnutMissing, PnutRateLimitAPIException,
                           PnutInsufficientStorageException, PnutAPIException, PnutError, PnutBadRequestAPIException)
-from pnutpy.models import (SimpleValueModel, SimpleValueDictListMode, APIModel, Post, User, Channel, Message, ExploreStream, File, Interaction, Token, APIMeta)
+from pnutpy.models import (SimpleValueModel, SimpleValueDictListMode, APIModel, Post, User, Channel, Message, ExploreStream, File, Poll, Interaction, Token, APIMeta)
 from pnutpy.utils import json_encoder
 
 
@@ -438,7 +438,6 @@ bind_api_method('unstick_message', '/channels/{channel_id}/messages/{message_id}
 
 
 # Files
-
 bind_api_method('create_file', '/files', payload_type=File, method='POST',
                 allowed_params=FILE_PARAMS, require_auth=True, content_type='multipart/form-data',)
 
@@ -469,6 +468,27 @@ bind_api_method('delete_file', '/files/{file_id}', payload_type=File, method='DE
 
 bind_api_method('get_my_files', '/users/me/files', payload_type=File, method='GET', payload_list=True,
 allowed_params=FILE_PARAMS + PAGINATION_PARAMS, require_auth=True)
+
+
+# Polls
+bind_api_method('create_poll', '/polls', payload_type=Poll, method='POST',
+                allowed_params=POLL_PARAMS, require_auth=True,)
+
+
+bind_api_method('respond_to_poll', '/polls/{poll_id}/response/{position}', payload_type=Poll, method='PUT',
+                allowed_params=POLL_PARAMS, require_auth=True,)
+
+
+bind_api_method('get_poll', '/polls/{poll_id}', payload_type=Poll, method='GET',
+                allowed_params=POLL_PARAMS, require_auth=True)
+
+
+bind_api_method('delete_poll', '/polls/{poll_id}', payload_type=Poll, method='DELETE',
+                allowed_params=POLL_PARAMS, require_auth=True)
+
+
+bind_api_method('get_my_polls', '/users/me/polls', payload_type=Poll, method='GET', payload_list=True,
+allowed_params=POLL_PARAMS + PAGINATION_PARAMS, require_auth=True)
 
 
 # Interactions
