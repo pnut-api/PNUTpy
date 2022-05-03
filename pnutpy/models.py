@@ -3,7 +3,7 @@
    :synopsis: Simple abstractions of pnut.io entities.
 
 """
-import collections
+import collections.abc
 from dateutil.parser import parse
 import json
 
@@ -65,16 +65,16 @@ class APIModel(dict):
             return
 
         for k, v in list(data.items()):
-            if isinstance(v, collections.Mapping):
+            if isinstance(v, collections.abc.Mapping):
                 self[k] = APIModel(v, api)
-            elif v and is_seq_not_string(v) and isinstance(v[0], collections.Mapping):
+            elif v and is_seq_not_string(v) and isinstance(v[0], collections.abc.Mapping):
                 self[k] = [APIModel(i, api) for i in v]
             else:
                 self[k] = v
 
         annotations = self.get('annotations')
         if annotations:
-            self._annotations_by_key = collections.defaultdict(list)
+            self._annotations_by_key = collections.abc.defaultdict(list)
             for annotation in annotations:
                 self._annotations_by_key[annotation.type].append(annotation.get('value', {}))
 
