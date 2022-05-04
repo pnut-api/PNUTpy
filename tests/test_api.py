@@ -19,13 +19,11 @@ class PnutpyAPITests(PnutpyTestCase):
     def test_post(self):
         text = u'awesome'
         post, meta = self.api.create_post(data={'text': text})
-        self.assertEquals(post.content.text, text)
+        self.assertEqual(post.content.text, text)
 
         post, meta = self.api.get_post(post)
 
         post, meta = self.api.delete_post(post)
-        post, meta = self.api.create_post(data={'text': text})
-        post, meta = post.delete()
 
         post, meta = self.api.repost_post(257434)
         post, meta = self.api.unrepost_post(257434)
@@ -34,7 +32,7 @@ class PnutpyAPITests(PnutpyTestCase):
         post, meta = self.api.unbookmark_post(257434)
 
         posts, meta = self.api.get_posts(ids='1,2,3')
-        self.assertEquals(len(posts), 3)
+        self.assertEqual(len(posts), 3)
 
         posts, meta = self.api.users_posts(9)
         posts, meta = self.api.users_bookmarked_posts(9)
@@ -52,19 +50,19 @@ class PnutpyAPITests(PnutpyTestCase):
     def test_user(self):
         display_name = u'tester %s' % (time.time())
         user, meta = self.api.get_user('me')
-        self.assertEquals(self.username, user.username)
+        self.assertEqual(self.username, user.username)
         old_name = user.name
         user.name = display_name
         cwd = os.path.dirname(__file__)
         del user.content['entities']
         user, meta = self.api.update_user('me', data=user)
-        self.assertEquals(display_name, user.name)
+        self.assertEqual(display_name, user.name)
 
         user, meta = self.api.patch_user('me', data={'name': old_name})
-        self.assertEquals(old_name, user.name)
+        self.assertEqual(old_name, user.name)
 
         users, meta = self.api.get_users(ids='1,2,3')
-        self.assertEquals(len(users), 3)
+        self.assertEqual(len(users), 3)
 
         with open(cwd + '/data/avatar.png', 'rb') as avatar:
             user, meta = self.api.update_avatar('me', files={'avatar': ('avatar.png', avatar, 'image/png')})
@@ -119,7 +117,7 @@ class PnutpyAPITests(PnutpyTestCase):
         })
 
         channel_fetched, meta = self.api.get_channel(channel)
-        self.assertEquals(channel.id, channel_fetched.id)
+        self.assertEqual(channel.id, channel_fetched.id)
 
         channels, meta = self.api.get_channels(ids=channel_fetched.id)
 
@@ -151,7 +149,7 @@ class PnutpyAPITests(PnutpyTestCase):
         }
 
         channel, meta = self.api.update_channel(channel, data=channel_update)
-        self.assertEquals(channel_update['acl']['write']['user_ids'], channel.acl.write.user_ids)
+        self.assertEqual(channel_update['acl']['write']['user_ids'], channel.acl.write.user_ids)
 
         channel, meta = self.api.subscribe_channel(951)
         channel, meta = self.api.unsubscribe_channel(951)
@@ -217,7 +215,7 @@ class PnutpyAPITests(PnutpyTestCase):
 
     #     files, meta = self.api.get_files(ids=','.join(ids))
 
-    #     self.assertEquals(len(files), 2)
+    #     self.assertEqual(len(files), 2)
     #     files, meta = self.api.get_my_files()
     #     self.assertGreaterEqual(len(files), 2)
 
@@ -262,22 +260,22 @@ class PnutpyAPITests(PnutpyTestCase):
     #     stream_def['object_types'] += ["star"]
 
     #     app_stream, meta = self.api.update_stream(app_stream, data=stream_def)
-    #     self.assertEquals(len(app_stream.object_types), 2)
+    #     self.assertEqual(len(app_stream.object_types), 2)
     #     app_stream, meta = self.api.delete_stream(app_stream)
     #     app_stream, meta = self.api.create_stream(data=stream_def)
     #     stream_def['key'] = "rollout_stream_2"
     #     app_stream, meta = self.api.create_stream(data=stream_def)
     #     app_streams, meta = self.api.get_streams()
-    #     self.assertEquals(len(app_streams), 2)
+    #     self.assertEqual(len(app_streams), 2)
     #     app_streams, meta = self.api.delete_all_streams()
     #     app_streams, meta = self.api.get_streams()
-    #     self.assertEquals(len(app_streams), 0)
+    #     self.assertEqual(len(app_streams), 0)
 
     def test_cursor(self):
         iterator = cursor(self.api.posts_streams_global, count=1)
         post1 = next(iterator)
         post2 = next(iterator)
-        self.assertNotEquals(post1.id, post2.id)
+        self.assertNotEqual(post1.id, post2.id)
 
 
 if __name__ == '__main__':
