@@ -26,7 +26,14 @@ Release History
 
 * add many missing endpoints, testing, documentation
 
+
 0.2.3 (2018-03-31)
 ++++++++++++++++++
 
 * add poll endpoints
+
+
+0.3.0 (2022-09-26)
+++++++++++++++++++
+
+* fix on Python 3.10
