@@ -33,7 +33,8 @@ Release History
 * add poll endpoints
 
 
-0.3.0 (2022-09-26)
+0.4.0 (2022-09-26)
 ++++++++++++++++++
 
+* skipping old tagged versioning
 * fix on Python 3.10
