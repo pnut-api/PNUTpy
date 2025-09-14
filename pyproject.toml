@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pnutpy"
+version = "0.5.4"
+authors = [
+    {name = "33MHz, pnut.io", email = "support@pnut.io"},
+    {name = "Morgan McMillian", email = "morgan@mcmillian.dev"},
+]
+license = "MIT"
+description = "pnut.io API library for python"
+keywords = ["pnut.io", "api", "library"]
+readme = "README.rst"
+urls = {Homepage = "https://github.com/pnut-api/PNUTpy"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "python-dateutil>=2.9",
+    "requests>=2.32.5",
+]
+requires-python = ">=3.10"
+
+[tool.setuptools]
+zip-safe = true
+include-package-data = false
+
+[tool.setuptools.packages.find]
+exclude = ["tests"]
+namespaces = false
